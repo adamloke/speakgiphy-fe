@@ -1,26 +1,58 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useReducer, useEffect } from "react"
+import { useImmerReducer } from "use-immer"
+import "./styles/App.scss"
+import StateContext from "./StateContext"
+import DispatchContext from "./DispatchContext"
+
+// Components
+import HeaderLoggedOut from "./comp/LoggedOut/HeaderLoggedOut"
+import HeroLoggedOut from "./comp/LoggedOut/HeroLoggedOut"
+import Header from "./comp/Header"
+import ChatWindow from "./comp/ChatWindow"
 
 function App() {
+  // Check if user is logged in
+  const initialState = {
+    loggedIn: Boolean(localStorage.getItem("speakgiphyToken")),
+    user: {
+      token: localStorage.getItem("speakgiphyToken"),
+      username: localStorage.getItem("speakgiphyUsername"),
+    },
+  }
+
+  // Change state with appDispatch
+  function Reducer(draft, action) {
+    switch (action.type) {
+      case "login":
+        draft.loggedIn = true
+        draft.user = action.data
+        break
+      case "logout":
+        draft.loggedIn = false
+        break
+    }
+  }
+
+  const [state, dispatch] = useImmerReducer(Reducer, initialState)
+
+  useEffect(() => {
+    if (state.loggedIn) {
+      localStorage.setItem("speakgiphyToken", state.user.token)
+      localStorage.setItem("speakgiphyUsername", state.user.username)
+    } else {
+      localStorage.removeItem("speakgiphyToken")
+      localStorage.removeItem("speakgiphyUsername")
+    }
+  }, [state.loggedIn])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <StateContext.Provider value={state}>
+      <DispatchContext.Provider value={dispatch}>
+        {state.loggedIn ? <Header /> : <HeaderLoggedOut />}
+        {state.loggedIn ? <ChatWindow /> : <HeroLoggedOut />}
+      </DispatchContext.Provider>
+    </StateContext.Provider>
+  )
 }
 
-export default App;
+export default App
