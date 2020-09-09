@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from "react"
+import React, { useEffect } from "react"
 import { useImmerReducer } from "use-immer"
 import "./styles/App.scss"
 import StateContext from "./StateContext"
@@ -11,13 +11,14 @@ import Header from "./comp/Header"
 import ChatWindow from "./comp/ChatWindow"
 
 function App() {
-  // Check if user is logged in
+  // Initial state
   const initialState = {
     loggedIn: Boolean(localStorage.getItem("speakgiphyToken")),
     user: {
       token: localStorage.getItem("speakgiphyToken"),
       username: localStorage.getItem("speakgiphyUsername"),
     },
+    //searchWindow: false,
   }
 
   // Change state with appDispatch
@@ -30,11 +31,17 @@ function App() {
       case "logout":
         draft.loggedIn = false
         break
+      //case "searchOpen":
+      //draft.searchWindow = true
+      //break
+      default:
+        break
     }
   }
 
   const [state, dispatch] = useImmerReducer(Reducer, initialState)
 
+  // Checks value of state.loggedIn, then add or remove local storage token.
   useEffect(() => {
     if (state.loggedIn) {
       localStorage.setItem("speakgiphyToken", state.user.token)
@@ -44,7 +51,6 @@ function App() {
       localStorage.removeItem("speakgiphyUsername")
     }
   }, [state.loggedIn])
-
   return (
     <StateContext.Provider value={state}>
       <DispatchContext.Provider value={dispatch}>
