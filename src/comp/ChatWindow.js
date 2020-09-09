@@ -1,18 +1,16 @@
 import { Transition } from "@tailwindui/react"
-import React, { useState } from "react"
+import React, { useContext } from "react"
 import Container from "./Container"
-//import DispatchContext from "../DispatchContext"
-//import StateContext from "../StateContext"
+import DispatchContext from "../DispatchContext"
+import StateContext from "../StateContext"
 
 function ChatWindow() {
-  const [searchWindow, openSearchWindow] = useState(false)
+  const appState = useContext(StateContext)
+  const appDispatch = useContext(DispatchContext)
 
-  //const appState = useContext(StateContext)
-  //const appDispatch = useContext(DispatchContext)
-
-  function handleSearch() {
-    openSearchWindow(true)
-    //appDispatch({ type: "searchOpen" })
+  function handleSearch(e) {
+    e.preventDefault()
+    appDispatch({ type: "searchOpen" })
   }
 
   return (
@@ -27,7 +25,7 @@ function ChatWindow() {
             Search
           </button>
         </form>
-        <Transition show={searchWindow} enter="transition-opacity duration-500" enterFrom="opacity-0" enterTo="opacity-100" leave="transition-opacity duration-150" leaveFrom="opacity-100" leaveTo="opacity-0">
+        <Transition show={appState.searchWindow} enter="transition-opacity duration-500" enterFrom="opacity-0" enterTo="opacity-100" leave="transition-opacity duration-150" leaveFrom="opacity-100" leaveTo="opacity-0">
           <div className="border border-white h-20">
             <p>GIF GRID</p>
           </div>

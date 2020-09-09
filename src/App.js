@@ -18,7 +18,7 @@ function App() {
       token: localStorage.getItem("speakgiphyToken"),
       username: localStorage.getItem("speakgiphyUsername"),
     },
-    //searchWindow: false,
+    searchWindow: false,
   }
 
   // Change state with appDispatch
@@ -31,9 +31,9 @@ function App() {
       case "logout":
         draft.loggedIn = false
         break
-      //case "searchOpen":
-      //draft.searchWindow = true
-      //break
+      case "searchOpen":
+        draft.searchWindow = true
+        break
       default:
         break
     }
