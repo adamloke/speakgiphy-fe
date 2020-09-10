@@ -9,17 +9,17 @@ import MainWindow from "./comp/MainWindow"
 import MainGuest from "./comp/guest/MainGuest"
 
 function App() {
-  // Initial state
   const initialState = {
     loggedIn: Boolean(localStorage.getItem("speakgiphyToken")),
     user: {
       token: localStorage.getItem("speakgiphyToken"),
       username: localStorage.getItem("speakgiphyUsername"),
     },
-    searchWindow: false,
+    searchQuery: "",
+    searchOpen: false,
+    searchResult: [],
   }
 
-  // Change state with appDispatch
   function Reducer(draft, action) {
     switch (action.type) {
       case "login":
@@ -29,17 +29,21 @@ function App() {
       case "logout":
         draft.loggedIn = false
         break
+      case "searchQuery":
+        draft.searchQuery = action.data
+        break
       case "searchOpen":
-        draft.searchWindow = true
+        draft.searchOpen = true
+        break
+      case "searchResult":
+        draft.searchResult = action.data
         break
       default:
-        break
     }
   }
 
   const [state, dispatch] = useImmerReducer(Reducer, initialState)
 
-  // Checks value of state.loggedIn, then add or remove local storage token.
   useEffect(() => {
     if (state.loggedIn) {
       localStorage.setItem("speakgiphyToken", state.user.token)
