@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
 import DispatchContext from "../DispatchContext"
 
-function Header(props) {
+function Menu() {
   const appDispatch = useContext(DispatchContext)
 
   function handleLogout() {
@@ -21,4 +21,4 @@ function Header(props) {
   )
 }
 
-export default Header
+export default Menu

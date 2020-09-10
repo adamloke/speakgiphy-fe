@@ -5,10 +5,8 @@ import StateContext from "./StateContext"
 import DispatchContext from "./DispatchContext"
 
 // Components
-import HeaderLoggedOut from "./comp/LoggedOut/HeaderLoggedOut"
-import HeroLoggedOut from "./comp/LoggedOut/HeroLoggedOut"
-import Header from "./comp/Header"
-import ChatWindow from "./comp/ChatWindow"
+import MainWindow from "./comp/MainWindow"
+import MainGuest from "./comp/guest/MainGuest"
 
 function App() {
   // Initial state
@@ -53,10 +51,7 @@ function App() {
   }, [state.loggedIn])
   return (
     <StateContext.Provider value={state}>
-      <DispatchContext.Provider value={dispatch}>
-        {state.loggedIn ? <Header /> : <HeaderLoggedOut />}
-        {state.loggedIn ? <ChatWindow /> : <HeroLoggedOut />}
-      </DispatchContext.Provider>
+      <DispatchContext.Provider value={dispatch}>{state.loggedIn ? <MainWindow /> : <MainGuest />}</DispatchContext.Provider>
     </StateContext.Provider>
   )
 }

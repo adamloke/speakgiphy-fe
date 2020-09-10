@@ -3,7 +3,7 @@ import Axios from "axios"
 import Container from "../Container"
 import DispatchContext from "../../DispatchContext"
 
-function HeroGuest() {
+function Hero() {
   const appDispatch = useContext(DispatchContext)
   const [email, setEmail] = useState()
   const [username, setUsername] = useState()
@@ -48,4 +48,4 @@ function HeroGuest() {
   )
 }
 
-export default HeroGuest
+export default Hero
