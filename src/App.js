@@ -35,6 +35,9 @@ function App() {
       case "searchOpen":
         draft.searchOpen = true
         break
+      case "searchClose":
+        draft.searchOpen = false
+        break
       case "searchResult":
         draft.searchResult = action.data
         break
@@ -53,6 +56,7 @@ function App() {
       localStorage.removeItem("speakgiphyUsername")
     }
   }, [state.loggedIn])
+
   return (
     <StateContext.Provider value={state}>
       <DispatchContext.Provider value={dispatch}>{state.loggedIn ? <MainWindow /> : <MainGuest />}</DispatchContext.Provider>

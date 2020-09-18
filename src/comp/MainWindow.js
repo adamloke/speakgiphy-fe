@@ -2,19 +2,16 @@ import React from "react"
 
 //Components
 import Menu from "./Menu"
-import Container from "./Container"
 import Feed from "./Feed"
 import SearchBox from "./SearchBox"
 
 function MainWindow() {
   return (
-    <>
+    <div className="flex flex-col justify-between h-screen w-full">
       <Menu />
-      <Container>
-        <Feed />
-        <SearchBox />
-      </Container>
-    </>
+      <Feed />
+      <SearchBox />
+    </div>
   )
 }
 

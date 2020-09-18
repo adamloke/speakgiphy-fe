@@ -1,8 +1,13 @@
-import React from "react"
+import React, { useContext } from "react"
+import StateContext from "../StateContext"
 
-function Feed(props) {
+function Feed() {
+  const appState = useContext(StateContext)
+
+  // fetch all posts from backend
+
   return (
-    <div className="border border-white h-64 w-full">
+    <div className="max-w-screen-xl w-full h-full border border-white mx-auto px-2">
       <p className="text-white">FEED</p>
     </div>
   )
