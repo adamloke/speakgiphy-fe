@@ -18,6 +18,7 @@ function App() {
     searchQuery: "",
     searchOpen: false,
     searchResult: [],
+    postFeed: [],
   }
 
   function Reducer(draft, action) {
@@ -40,6 +41,9 @@ function App() {
         break
       case "searchResult":
         draft.searchResult = action.data
+        break
+      case "postFeed":
+        draft.postFeed = action.data
         break
       default:
     }
