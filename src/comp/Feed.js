@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useRef } from "react"
 import Axios from "axios"
+import ScrollToBottom from "react-scroll-to-bottom"
 import DispatchContext from "../DispatchContext"
 import StateContext from "../StateContext"
 
@@ -16,13 +17,13 @@ function Feed() {
     }
     fetchPosts()
   }, [])
-
+  /*
   useEffect(() => {
     postFeedWindow.current.scrollTop = postFeedWindow.current.scrollHeight
     console.log(postFeedWindow.current.scrollTop)
     console.log(postFeedWindow.current.scrollHeight)
   }, [appState.postFeed])
-
+*/
   const showPosts = appState.postFeed.map((post) => {
     return (
       <div key={post._id} className="my-2 mx-2">
@@ -31,11 +32,7 @@ function Feed() {
     )
   })
 
-  return (
-    <div className="max-w-screen-xl w-full h-full overflow-auto border border-white mx-auto px-2" ref={postFeedWindow}>
-      {showPosts}
-    </div>
-  )
+  return <ScrollToBottom className="max-w-screen-xl w-full h-full overflow-auto border border-white mx-auto px-2">{showPosts}</ScrollToBottom>
 }
 
 export default Feed
