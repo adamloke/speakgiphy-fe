@@ -1,8 +1,8 @@
 import React, { useState, useContext } from "react"
 import Axios from "axios"
-import DispatchContext from "../../DispatchContext"
+import DispatchContext from "../DispatchContext"
 
-function Header() {
+function GuestHeader() {
   const appDispatch = useContext(DispatchContext)
 
   const [username, setUsername] = useState()
@@ -39,4 +39,4 @@ function Header() {
   )
 }
 
-export default Header
+export default GuestHeader

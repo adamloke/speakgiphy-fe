@@ -4,9 +4,11 @@ import "./styles/App.scss"
 import StateContext from "./StateContext"
 import DispatchContext from "./DispatchContext"
 
-// Components
-import MainWindow from "./comp/MainWindow"
-import MainGuest from "./comp/guest/MainGuest"
+//components
+import GuestHeader from "./comp/GuestHeader"
+import GuestHero from "./comp/GuestHero"
+import ChatMenu from "./comp/ChatMenu"
+import ChatBox from "./comp/ChatBox"
 
 function App() {
   const initialState = {
@@ -63,7 +65,19 @@ function App() {
 
   return (
     <StateContext.Provider value={state}>
-      <DispatchContext.Provider value={dispatch}>{state.loggedIn ? <MainWindow /> : <MainGuest />}</DispatchContext.Provider>
+      <DispatchContext.Provider value={dispatch}>
+        {state.loggedIn ? (
+          <div className="flex flex-col justify-between h-screen w-full">
+            <ChatMenu />
+            <ChatBox />
+          </div>
+        ) : (
+          <>
+            <GuestHeader />
+            <GuestHero />
+          </>
+        )}
+      </DispatchContext.Provider>
     </StateContext.Provider>
   )
 }

@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
 import DispatchContext from "../DispatchContext"
 
-function Menu() {
+function ChatMenu() {
   const appDispatch = useContext(DispatchContext)
 
   function handleLogout() {
@@ -21,4 +21,4 @@ function Menu() {
   )
 }
 
-export default Menu
+export default ChatMenu

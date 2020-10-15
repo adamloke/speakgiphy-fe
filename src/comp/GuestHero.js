@@ -1,8 +1,8 @@
 import React, { useState, useContext } from "react"
 import Axios from "axios"
-import DispatchContext from "../../DispatchContext"
+import DispatchContext from "../DispatchContext"
 
-function Hero() {
+function GuestHero() {
   const appDispatch = useContext(DispatchContext)
   const [email, setEmail] = useState()
   const [username, setUsername] = useState()
@@ -14,9 +14,9 @@ function Hero() {
   async function handleSubmit(e) {
     e.preventDefault()
     try {
-      await Axios.post("http://localhost:8080/register", { username, email, password })
-      console.log("Account created")
-      appDispatch({ type: "login" })
+      const response = await Axios.post("http://localhost:8080/register", { username, email, password })
+      appDispatch({ type: "login", data: response.data })
+      console.log(response.data)
     } catch (e) {
       console.log(e.response.data)
     }
@@ -45,4 +45,4 @@ function Hero() {
   )
 }
 
-export default Hero
+export default GuestHero
