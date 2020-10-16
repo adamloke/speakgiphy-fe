@@ -5,6 +5,9 @@ import { Transition } from "@tailwindui/react"
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
 import ScrollToBottom from "react-scroll-to-bottom"
 import StateContext from "../StateContext"
+import io from "socket.io-client"
+
+const socket = io("http://localhost:8080")
 
 function ChatBox() {
   const appState = useContext(StateContext)
@@ -15,7 +18,7 @@ function ChatBox() {
     postFeed: [],
   })
 
-  // fetch all posts on mount
+  // fetch all posts from db
   useEffect(() => {
     async function fetchPosts() {
       const response = await Axios.get("http://localhost:8080/posts", { token: appState.user.token })
@@ -24,6 +27,15 @@ function ChatBox() {
       })
     }
     fetchPosts()
+  }, [])
+
+  // get new posts from server and set state
+  useEffect(() => {
+    socket.on("chatFromServer", (post) => {
+      setState((draft) => {
+        draft.postFeed.push(post)
+      })
+    })
   }, [])
 
   // send search query to state
@@ -66,9 +78,13 @@ function ChatBox() {
 
   // send clicked gif to db and close search window
   async function handlePost(e) {
+    const value = e.target.title
+    const source = e.target.src
     try {
-      await Axios.post("http://localhost:8080/create-post", { title: e.target.title, body: e.target.src, token: appState.user.token, username: appState.user.username })
+      socket.emit("chatFromBrowser", { title: value, body: source, token: appState.user.token, username: appState.user.username })
+      await Axios.post("http://localhost:8080/create-post", { title: value, body: source, token: appState.user.token, username: appState.user.username })
       setState((draft) => {
+        draft.postFeed.push({ title: value, body: source, token: appState.user.token, username: appState.user.username })
         draft.searchQuery = ""
         draft.searchOpen = false
       })
