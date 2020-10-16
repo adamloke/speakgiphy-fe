@@ -17,10 +17,6 @@ function App() {
       token: localStorage.getItem("speakgiphyToken"),
       username: localStorage.getItem("speakgiphyUsername"),
     },
-    searchQuery: "",
-    searchOpen: false,
-    searchResult: [],
-    postFeed: [],
   }
 
   function Reducer(draft, action) {
@@ -31,21 +27,6 @@ function App() {
         break
       case "logout":
         draft.loggedIn = false
-        break
-      case "searchQuery":
-        draft.searchQuery = action.data
-        break
-      case "searchOpen":
-        draft.searchOpen = true
-        break
-      case "searchClose":
-        draft.searchOpen = false
-        break
-      case "searchResult":
-        draft.searchResult = action.data
-        break
-      case "postFeed":
-        draft.postFeed = action.data
         break
       default:
     }
