@@ -3,8 +3,6 @@ import { useImmerReducer } from "use-immer"
 import "./styles/App.scss"
 import StateContext from "./StateContext"
 import DispatchContext from "./DispatchContext"
-
-//components
 import GuestHeader from "./comp/GuestHeader"
 import GuestHero from "./comp/GuestHero"
 import ChatMenu from "./comp/ChatMenu"
@@ -17,6 +15,7 @@ function App() {
       token: localStorage.getItem("speakgiphyToken"),
       username: localStorage.getItem("speakgiphyUsername"),
     },
+    sideMenu: false,
   }
 
   function Reducer(draft, action) {
@@ -27,6 +26,12 @@ function App() {
         break
       case "logout":
         draft.loggedIn = false
+        break
+      case "openMenu":
+        draft.sideMenu = true
+        break
+      case "closeMenu":
+        draft.sideMenu = false
         break
       default:
     }
