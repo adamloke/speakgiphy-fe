@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
 import DispatchContext from "../DispatchContext"
 
-function ChatMenu() {
+function ChatHeader() {
   const appDispatch = useContext(DispatchContext)
 
   const menuOpen = () => {
@@ -24,4 +24,4 @@ function ChatMenu() {
   )
 }
 
-export default ChatMenu
+export default ChatHeader

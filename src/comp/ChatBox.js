@@ -21,7 +21,7 @@ function ChatBox() {
     activeUsers: [],
   })
 
-  // fetch all posts from db
+  // fetch all posts from db and connect user to socket
   useEffect(() => {
     socket.emit("connectUser", { username: appState.user.username })
     async function fetchPosts() {
@@ -37,6 +37,7 @@ function ChatBox() {
     fetchPosts()
   }, [])
 
+  // get new posts and active users
   useEffect(() => {
     let mounted = true
     socket.on("chatFromServer", (post) => {
@@ -56,6 +57,16 @@ function ChatBox() {
     })
     return () => (mounted = false)
   }, [])
+
+  // if user click happy face icon, then ....
+  const handleLike = () => {
+    console.log("like")
+  }
+
+  // if user click happy face icon, then ....
+  const handleDislike = () => {
+    console.log("dislike")
+  }
 
   // send search query to state
   function handleSearchQuery(e) {
@@ -92,7 +103,7 @@ function ChatBox() {
     }
   }
 
-  // display search result in search window
+  // show gifs from search result
   const showSearchResult = state.searchResult.map(function (gif) {
     return (
       <div key={gif.id} className="flex justify-center my-2">
@@ -119,13 +130,12 @@ function ChatBox() {
     }
   }
 
-  // related to side menu
-
+  // open side menu
   const closeMenu = () => {
     appDispatch({ type: "closeMenu" })
   }
 
-  // display active users
+  // display active users in side menu
   const showActiveUsers = state.activeUsers.map((username, index) => {
     return (
       <div key={index} className="flex flex-row items-center my-2">
@@ -138,6 +148,7 @@ function ChatBox() {
     )
   })
 
+  // logout user
   const handleLogout = () => {
     socket.emit("removeUser", { username: appState.user.username })
     appDispatch({ type: "logout" })
@@ -145,65 +156,85 @@ function ChatBox() {
 
   return (
     <>
-      <ScrollToBottom className="max-w-screen-md w-full h-full overflow-auto mx-auto bg-black">
-        {state.postFeed.map((post, index) => {
-          if (post.username === appState.user.username) {
-            return (
-              <div key={index} className="flex justify-end mx-5 md:mx-10 my-4">
-                <div className="flex flex-col ">
-                  <img className="" src={post.body} alt={post.title}></img>
-                  <p className="text-gray-400 font-semibold text-sm mt-1">{post.username}</p>
+      <ScrollToBottom className="max-w-screen-md w-full h-full overflow-auto mx-auto bg-trueblack">
+        {
+          // show gifs in feed
+          state.postFeed.map((post, index) => {
+            // if gif is posted by user, then show on right side of feed
+            if (post.username === appState.user.username) {
+              return (
+                <div key={index} className="flex justify-end mx-5 md:mx-10 my-4 bg-trueblack">
+                  <div className="flex flex-col p-2 bg-black">
+                    <img src={post.body} alt={post.title}></img>
+                    <div className="flex justify-between items-center mt-2">
+                      <div className="flex flex-row items-center">
+                        <p className="text-spacegray font-semibold text-md">{post.username}</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            )
-          } else {
-            return (
-              <div key={index} className="flex justify-start mx-5 md:mx-10 my-4">
-                <div className="flex flex-col">
-                  <img src={post.body} alt={post.title}></img>
-                  <p className="text-gray-400 font-semibold text-sm mt-1">{post.username}</p>
+              )
+            } else {
+              return (
+                // if gif is not posted by user, then show on left side of feed
+                <div key={index} className="flex justify-start mx-5 md:mx-10 my-4 bg-trueblack">
+                  <div className="flex flex-col p-2 bg-black">
+                    <img src={post.body} alt={post.title}></img>
+                    <div className="flex justify-between items-center mt-2">
+                      <div className="flex flex-row items-center">
+                        <p className="text-spacegray font-semibold text-md">{post.username}</p>
+                      </div>
+                      <div className="flex flex-row items-center">
+                        <svg className="mr-1 w-6 h-6 text-spacegray" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path onClick={handleDislike} strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <svg className="ml-1 w-6 h-6 text-spacegray" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path onClick={handleLike} strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            )
-          }
-        })}
+              )
+            }
+          })
+        }
       </ScrollToBottom>
 
-      {state.searchOpen ? (
-        <div className="max-w-screen-md w-full mx-auto px-2">
+      <div className="max-w-screen-md w-full mx-auto px-2">
+        {state.searchOpen ? (
+          // if searchwindow is open, then show a "close" button for user to close window without posting a gif
           <form onSubmit={closeSearch} className="flex flex-row items-baseline justify-between py-4">
             <input onChange={handleSearchQuery} name="search" type="text" placeholder="Speak GIPHY.." value={state.searchQuery} autoComplete="off" className="w-full h-10 text-black px-2"></input>
-            <button type="submit" className={state.searchQuery ? "inline-block text-md font-semibold ml-2 px-4 py-3 leading-none border text-white border-purple-700 bg-purple-700 hover:border-transparent hover:bg-purple-800" : "inline-block border-purple-700 bg-purple-700 text-md text-white font-semibold mx-2 px-4 py-3 leading-none border opacity-50 cursor-not-allowed"}>
+            <button type="submit" className={state.searchQuery ? "flex items-center inline-block text-md font-semibold ml-2 px-4 py-3 leading-none border text-white border-purple-700 bg-purple-700 hover:border-transparent hover:bg-purple-800" : "flex items-center inline-block border-purple-700 bg-purple-700 text-md text-white font-semibold mx-2 px-4 py-3 leading-none border opacity-50 cursor-not-allowed"}>
               Close
+              <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
             </button>
           </form>
-
-          <Transition show={state.searchOpen} enter="transition-opacity duration-500" enterFrom="opacity-0" enterTo="opacity-100" leave="transition-opacity duration-150" leaveFrom="opacity-100" leaveTo="opacity-0">
-            <div className="mx-auto">
-              <ResponsiveMasonry columnsCountBreakPoints={{ 350: 2, 650: 3 }}>
-                <Masonry className="flex justify-center">{showSearchResult}</Masonry>
-              </ResponsiveMasonry>
-            </div>
-          </Transition>
-        </div>
-      ) : (
-        <div className="max-w-screen-md w-full mx-auto px-2">
+        ) : (
+          // if searchwindow is not open, then show a "search" button for user to make a giphy api call
           <form onSubmit={handleSearch} className="flex flex-row items-baseline justify-between py-4">
             <input onChange={handleSearchQuery} name="search" type="text" placeholder="Speak GIPHY.." value={state.searchQuery} autoComplete="off" className="w-full h-10 text-black px-2"></input>
-            <button type="submit" className={state.searchQuery ? "inline-block text-md font-semibold ml-2 px-4 py-3 leading-none border text-white border-purple-700 bg-purple-700 hover:border-transparent hover:bg-purple-800" : "inline-block border-purple-700 bg-purple-700 text-md text-white font-semibold mx-2 px-4 py-3 leading-none border opacity-50 cursor-not-allowed"}>
+            <button type="submit" className={state.searchQuery ? "flex items-center inline-block text-md font-semibold ml-2 px-4 py-3 leading-none border text-white border-purple-700 bg-purple-700 hover:border-transparent hover:bg-purple-800" : "flex items-center inline-block border-purple-700 bg-purple-700 text-md text-white font-semibold mx-2 px-4 py-3 leading-none border opacity-50 cursor-not-allowed"}>
               Search
+              <svg className="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path>
+              </svg>
             </button>
           </form>
-
-          <Transition show={state.searchOpen} enter="transition-opacity duration-500" enterFrom="opacity-0" enterTo="opacity-100" leave="transition-opacity duration-150" leaveFrom="opacity-100" leaveTo="opacity-0">
-            <div className="mx-auto">
-              <ResponsiveMasonry columnsCountBreakPoints={{ 350: 2, 650: 3 }}>
-                <Masonry className="flex justify-center">{showSearchResult}</Masonry>
-              </ResponsiveMasonry>
-            </div>
-          </Transition>
-        </div>
-      )}
+        )}
+        {/* Show gifs from search result in masonry grid */}
+        <Transition show={state.searchOpen} enter="transition-opacity duration-500" enterFrom="opacity-0" enterTo="opacity-100" leave="transition-opacity duration-150" leaveFrom="opacity-100" leaveTo="opacity-0">
+          <div className="mx-auto">
+            <ResponsiveMasonry columnsCountBreakPoints={{ 350: 2, 650: 3 }}>
+              <Masonry className="flex justify-center">{showSearchResult}</Masonry>
+            </ResponsiveMasonry>
+          </div>
+        </Transition>
+      </div>
+      {/* Show side menu  */}
       <Transition show={appState.sideMenu} enter="transition ease-out duration-100 transform" enterFrom="opacity-0 scale-95" enterTo="opacity-100 scale-100" leave="transition ease-in duration-75 transform" leaveFrom="opacity-100 scale-100" leaveTo="opacity-0 scale-95">
         {(ref) => (
           <div ref={ref} className="flex flex-col origin-right absolute right-0 w-3/4 md:w-1/4 shadow-2xl h-screen">

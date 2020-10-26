@@ -5,7 +5,7 @@ import StateContext from "./StateContext"
 import DispatchContext from "./DispatchContext"
 import GuestHeader from "./comp/GuestHeader"
 import GuestHero from "./comp/GuestHero"
-import ChatMenu from "./comp/ChatMenu"
+import ChatHeader from "./comp/ChatHeader"
 import ChatBox from "./comp/ChatBox"
 
 function App() {
@@ -54,7 +54,7 @@ function App() {
       <DispatchContext.Provider value={dispatch}>
         {state.loggedIn ? (
           <div className="flex flex-col justify-between h-screen w-full">
-            <ChatMenu />
+            <ChatHeader />
             <ChatBox />
           </div>
         ) : (
