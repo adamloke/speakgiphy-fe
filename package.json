@@ -16,6 +16,7 @@
     "html-webpack-harddisk-plugin": "^1.0.2",
     "html-webpack-plugin": "^4.5.0",
     "immer": "^7.0.8",
+    "netlify-cli": "^2.67.0",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
