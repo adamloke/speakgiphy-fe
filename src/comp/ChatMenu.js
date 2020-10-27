@@ -4,7 +4,8 @@ import { Transition } from "@headlessui/react"
 import StateContext from "../StateContext"
 import DispatchContext from "../DispatchContext"
 import io from "socket.io-client"
-const socket = io("http://localhost:8080")
+
+const socket = io(process.env.REACT_APP_BACKENDURL || "https://speakgiphy.herokuapp.com")
 
 function ChatMenu() {
   const appState = useContext(StateContext)

@@ -1,8 +1,8 @@
 import React, { useEffect, useContext } from "react"
-import Axios from "axios"
 import DispatchContext from "../DispatchContext"
 import { useImmerReducer } from "use-immer"
 import { Transition } from "@tailwindui/react"
+import Axios from "axios"
 
 function GuestHero() {
   const appDispatch = useContext(DispatchContext)
@@ -135,7 +135,7 @@ function GuestHero() {
       const ourRequest = Axios.CancelToken.source()
       async function fetchResults() {
         try {
-          const response = await Axios.post("http://localhost:8080/doesUsernameExist", { username: state.username.value }, { cancelToken: ourRequest.token })
+          const response = await Axios.post("/doesUsernameExist", { username: state.username.value }, { cancelToken: ourRequest.token })
           dispatch({ type: "usernameUniqueResult", value: response.data })
         } catch (e) {
           console.log("error username request")
@@ -152,7 +152,7 @@ function GuestHero() {
       const ourRequest = Axios.CancelToken.source()
       async function fetchResults() {
         try {
-          const response = await Axios.post("http://localhost:8080/doesEmailExist", { email: state.email.value }, { cancelToken: ourRequest.token })
+          const response = await Axios.post("/doesEmailExist", { email: state.email.value }, { cancelToken: ourRequest.token })
           dispatch({ type: "emailUniqueResult", value: response.data })
         } catch (e) {
           console.log("error email request")
@@ -169,7 +169,7 @@ function GuestHero() {
       const ourRequest = Axios.CancelToken.source()
       async function fetchResults() {
         try {
-          const response = await Axios.post("http://localhost:8080/register", { username: state.username.value, email: state.email.value, password: state.password.value }, { cancelToken: ourRequest.token })
+          const response = await Axios.post("/register", { username: state.username.value, email: state.email.value, password: state.password.value }, { cancelToken: ourRequest.token })
           appDispatch({ type: "login", data: response.data })
         } catch (e) {
           console.log("error password request")

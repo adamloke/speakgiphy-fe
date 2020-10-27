@@ -7,6 +7,8 @@ import GuestHeader from "./comp/GuestHeader"
 import GuestHero from "./comp/GuestHero"
 import ChatHeader from "./comp/ChatHeader"
 import ChatFeed from "./comp/ChatFeed"
+import Axios from "axios"
+Axios.defaults.baseURL = process.env.REACT_APP_BACKENDURL || "https://speakgiphy.herokuapp.com"
 
 function App() {
   const initialState = {
@@ -57,6 +59,23 @@ function App() {
       localStorage.removeItem("speakgiphyUsername")
     }
   }, [state.loggedIn])
+
+  // check if token has expired
+  useEffect(() => {
+    if (state.loggedIn) {
+      const ourRequest = Axios.CancelToken.source()
+      async function fetchResults() {
+        try {
+          const response = await Axios.post("/checkToken", { token: state.user.token }, { cancelToken: ourRequest.token })
+          if (!response.data) {
+            dispatch({ type: "logout" })
+          }
+        } catch (e) {}
+      }
+      fetchResults()
+      return () => ourRequest.cancel()
+    }
+  }, [])
 
   return (
     <StateContext.Provider value={state}>

@@ -1,8 +1,8 @@
 import React, { useEffect, useContext } from "react"
-import Axios from "axios"
 import DispatchContext from "../DispatchContext"
 import { useImmerReducer } from "use-immer"
 import { Transition } from "@tailwindui/react"
+import Axios from "axios"
 
 function GuestHeader() {
   const appDispatch = useContext(DispatchContext)
@@ -49,7 +49,7 @@ function GuestHeader() {
   async function handleSubmit(e) {
     e.preventDefault()
     try {
-      const response = await Axios.post("http://localhost:8080/login", { username: state.username, password: state.password })
+      const response = await Axios.post("/login", { username: state.username, password: state.password })
       if (response.data) {
         appDispatch({ type: "login", data: response.data })
       } else {

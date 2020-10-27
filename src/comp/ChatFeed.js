@@ -1,13 +1,13 @@
 import React, { useEffect, useContext } from "react"
-import Axios from "axios"
 import ChatMenu from "./ChatMenu"
 import ChatSearch from "./ChatSearch"
 import ScrollToBottom from "react-scroll-to-bottom"
 import StateContext from "../StateContext"
 import DispatchContext from "../DispatchContext"
 import io from "socket.io-client"
+import Axios from "axios"
 
-const socket = io("http://localhost:8080")
+const socket = io(process.env.REACT_APP_BACKENDURL || "https://speakgiphy.herokuapp.com")
 
 function ChatFeed() {
   const appState = useContext(StateContext)
@@ -19,7 +19,7 @@ function ChatFeed() {
     socket.emit("connectUser", { username: appState.user.username })
     async function fetchPosts() {
       try {
-        const response = await Axios.get("http://localhost:8080/posts", { token: appState.user.token })
+        const response = await Axios.get("/posts", { token: appState.user.token })
         appDispatch({ type: "fetchPosts", data: response.data })
       } catch (e) {
         console.log("Error fetching posts")

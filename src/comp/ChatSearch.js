@@ -1,13 +1,13 @@
 import React, { useContext } from "react"
-import Axios from "axios"
 import { useImmer } from "use-immer"
 import { Transition } from "@headlessui/react"
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
 import StateContext from "../StateContext"
 import DispatchContext from "../DispatchContext"
 import io from "socket.io-client"
+import Axios from "axios"
 
-const socket = io("http://localhost:8080")
+const socket = io(process.env.REACT_APP_BACKENDURL || "https://speakgiphy.herokuapp.com")
 
 function ChatSearch() {
   const appDispatch = useContext(DispatchContext)
@@ -73,7 +73,7 @@ function ChatSearch() {
     }
     try {
       socket.emit("chatFromBrowser", { title: post.title, body: post.body, token: post.token, username: post.username })
-      await Axios.post("http://localhost:8080/create-post", { title: post.title, body: post.body, token: post.token, username: post.username })
+      await Axios.post("/create-post", { title: post.title, body: post.body, token: post.token, username: post.username })
       appDispatch({ type: "newPost", data: post })
       setState((draft) => {
         draft.searchQuery = ""
