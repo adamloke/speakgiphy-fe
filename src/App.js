@@ -6,7 +6,7 @@ import DispatchContext from "./DispatchContext"
 import GuestHeader from "./comp/GuestHeader"
 import GuestHero from "./comp/GuestHero"
 import ChatHeader from "./comp/ChatHeader"
-import ChatBox from "./comp/ChatBox"
+import ChatFeed from "./comp/ChatFeed"
 
 function App() {
   const initialState = {
@@ -16,6 +16,7 @@ function App() {
       username: localStorage.getItem("speakgiphyUsername"),
     },
     sideMenu: false,
+    postFeed: [],
   }
 
   function Reducer(draft, action) {
@@ -27,13 +28,21 @@ function App() {
       case "logout":
         draft.loggedIn = false
         break
+      case "fetchPosts":
+        draft.postFeed = action.data
+        break
+      case "getPosts":
+        draft.postFeed.push(action.data)
+        break
+      case "addNewPost":
+        draft.postFeed.push(action.data)
+        break
       case "openMenu":
         draft.sideMenu = true
         break
       case "closeMenu":
         draft.sideMenu = false
         break
-      default:
     }
   }
 
@@ -55,7 +64,7 @@ function App() {
         {state.loggedIn ? (
           <div className="flex flex-col justify-between h-screen w-full">
             <ChatHeader />
-            <ChatBox />
+            <ChatFeed />
           </div>
         ) : (
           <>
