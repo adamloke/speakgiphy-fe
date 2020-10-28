@@ -45,7 +45,7 @@ function ChatMenu() {
         </div>
       )
     } else {
-      console.log("No active users")
+      return console.log("No active users")
     }
   })
 

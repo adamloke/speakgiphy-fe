@@ -195,7 +195,7 @@ function GuestHero() {
     <div className="flex flex-col lg:flex-row max-w-screen-xl mx-auto p-6 lg:mt-32 justify-center">
       <div className="w-full lg:w-1/2 my-auto">
         <h1 className="text-gray-100 font-bold text-4xl lg:text-6xl mb-4">Do you speak GIF?</h1>
-        <p className="text-spacegray text-xl lg:text-2xl">GIF is not a spoken language. It's a language of emotions and humor. Join and chat directly with other users around the world, using only the GIPHY API. It's going to get weird.</p>
+        <p className="text-spacegray text-xl lg:text-2xl">GIF is not a spoken language. It's a language of emotions and humor. Join and chat directly with others around the world, using only the GIPHY API. It's going to get weird.</p>
       </div>
       <div className="flex justify-center w-full mt-10 lg:mt-0 lg:w-1/2">
         <div className="flex-row w-64 bg-white w-full lg:w-2/3 px-12 py-8">

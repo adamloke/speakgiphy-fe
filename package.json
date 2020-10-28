@@ -50,6 +50,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^9.8.6",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "postcss-cli": "^7.1.2",
     "tailwindcss": "^1.7.6"
   }

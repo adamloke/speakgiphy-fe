@@ -45,6 +45,7 @@ function App() {
       case "closeMenu":
         draft.sideMenu = false
         break
+      default:
     }
   }
 
