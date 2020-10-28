@@ -47,11 +47,11 @@ function ChatFeed() {
           if (post.username === appState.user.username) {
             return (
               <div key={index} className="flex justify-end mx-5 md:mx-10 my-4 bg-trueblack">
-                <div className="flex flex-col p-2 bg-black">
-                  <img src={post.body} alt={post.title}></img>
+                <div className="flex flex-col">
+                  <img className="border border-black" src={post.body} alt={post.title}></img>
                   <div className="flex justify-end items-center mt-2">
                     <div className="flex items-center">
-                      <p className="text-spacegray font-semibold text-md">{post.username}</p>
+                      <p className="text-spacegray font-semibold text-md px-2 bg-black rounded-lg">{post.username}</p>
                     </div>
                   </div>
                 </div>
@@ -60,10 +60,10 @@ function ChatFeed() {
           } else {
             return (
               <div key={index} className="flex justify-start mx-5 md:mx-10 my-4 bg-trueblack">
-                <div className="flex flex-col p-2 bg-black">
-                  <img src={post.body} alt={post.title}></img>
+                <div className="flex flex-col">
+                  <img className="border border-black" src={post.body} alt={post.title}></img>
                   <div className="flex justify-between items-center mt-2">
-                    <p className="text-spacegray font-semibold text-md">{post.username}</p>
+                    <p className="text-spacegray font-semibold text-md px-2 bg-black rounded-lg">{post.username}</p>
                   </div>
                 </div>
               </div>
