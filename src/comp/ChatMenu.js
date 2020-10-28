@@ -5,7 +5,7 @@ import StateContext from "../StateContext"
 import DispatchContext from "../DispatchContext"
 import io from "socket.io-client"
 
-const socket = io(process.env.REACT_APP_BACKENDURL || "https://speakgiphy.herokuapp.com")
+const socket = io("https://speakgiphy.herokuapp.com")
 
 function ChatMenu() {
   const appState = useContext(StateContext)

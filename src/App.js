@@ -8,7 +8,7 @@ import GuestHero from "./comp/GuestHero"
 import ChatHeader from "./comp/ChatHeader"
 import ChatFeed from "./comp/ChatFeed"
 import Axios from "axios"
-Axios.defaults.baseURL = process.env.REACT_APP_BACKENDURL || "https://speakgiphy.herokuapp.com"
+Axios.defaults.baseURL = "https://speakgiphy.herokuapp.com"
 
 function App() {
   const initialState = {

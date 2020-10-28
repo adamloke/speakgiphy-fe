@@ -7,7 +7,7 @@ import DispatchContext from "../DispatchContext"
 import io from "socket.io-client"
 import Axios from "axios"
 
-const socket = io(process.env.REACT_APP_BACKENDURL || "https://speakgiphy.herokuapp.com")
+const socket = io("https://speakgiphy.herokuapp.com")
 
 function ChatSearch() {
   const appDispatch = useContext(DispatchContext)
