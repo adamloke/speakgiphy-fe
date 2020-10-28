@@ -30,7 +30,7 @@ function ChatSearch() {
   async function handleSearch(e) {
     e.preventDefault()
     try {
-      const searchResponse = await Axios.get("http://api.giphy.com/v1/gifs/search", {
+      const searchResponse = await Axios.get("https://api.giphy.com/v1/gifs/search", {
         params: {
           q: state.searchQuery,
           api_key: process.env.REACT_APP_GIPHY_API_KEY,
