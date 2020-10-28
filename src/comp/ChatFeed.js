@@ -70,9 +70,6 @@ function ChatFeed() {
             )
           }
         })}
-        <div className="w-full h-10 bg-white">
-          <img src={"../assets/PoweredBy_200px-Black_HorizText.png"} />
-        </div>
       </ScrollToBottom>
       <ChatSearch />
       <ChatMenu />
