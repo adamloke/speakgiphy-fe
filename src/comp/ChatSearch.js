@@ -85,7 +85,7 @@ function ChatSearch() {
   }
 
   return (
-    <div className="max-w-screen-md w-full mx-auto px-2">
+    <div className="sticky bottom-0 max-w-screen-md w-full mx-auto px-2">
       {state.searchOpen ? (
         // if searchwindow is open, then show a "close" button for user to close window without posting a gif
         <form onSubmit={closeSearch} className="flex flex-row items-baseline justify-between py-4">
