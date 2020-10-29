@@ -42,7 +42,7 @@ function ChatFeed() {
 
   return (
     <>
-      <ScrollToBottom className="max-w-screen-md w-full h-full overflow-auto mx-auto bg-trueblack">
+      <ScrollToBottom className="flex-1 overflow-y-auto w-full max-w-screen-md mx-auto bg-trueblack">
         {appState.postFeed.map((post, index) => {
           if (post.username === appState.user.username) {
             return (

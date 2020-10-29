@@ -82,7 +82,7 @@ function App() {
     <StateContext.Provider value={state}>
       <DispatchContext.Provider value={dispatch}>
         {state.loggedIn ? (
-          <div className="flex flex-col justify-between h-screen w-full">
+          <div className="flex flex-col h-screen w-full">
             <ChatHeader />
             <ChatFeed />
           </div>
