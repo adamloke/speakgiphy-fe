@@ -19,7 +19,7 @@ function ChatSearch() {
   })
 
   // send search query to state
-  function handleSearchQuery(e) {
+  const handleSearchQuery = (e) => {
     const value = e.target.value
     setState((draft) => {
       draft.searchQuery = value
@@ -85,7 +85,7 @@ function ChatSearch() {
   }
 
   return (
-    <div className="sticky bottom-0 max-w-screen-md w-full mx-auto px-2">
+    <div className="sticky bottom-0 bg-black max-w-screen-md w-full mx-auto px-2">
       {state.searchOpen ? (
         // if searchwindow is open, then show a "close" button for user to close window without posting a gif
         <form onSubmit={closeSearch} className="flex flex-row items-baseline justify-between py-4">
