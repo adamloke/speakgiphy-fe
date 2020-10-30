@@ -58,7 +58,7 @@ function ChatMenu() {
   return (
     <Transition show={appState.sideMenu} enter="transition ease-out duration-100 transform" enterFrom="opacity-0 scale-95" enterTo="opacity-100 scale-100" leave="transition ease-in duration-75 transform" leaveFrom="opacity-100 scale-100" leaveTo="opacity-0 scale-95">
       {(ref) => (
-        <div ref={ref} className="flex flex-col origin-right absolute right-0 w-3/4 md:w-1/4 shadow-2xl h-screen">
+        <div ref={ref} className="flex flex-col origin-right absolute right-0 w-3/4 md:w-1/4 shadow-2xl h-full">
           <div className="flex flex-col bg-gray-900 shadow-xs h-full p-5 md:p-10">
             <div className="flex flex-start">
               <button onClick={closeMenu} type="submit" className="flex items-center inline-block text-md font-semibold px-4 py-3 leading-none border text-white border-purple-700 bg-purple-700 hover:border-transparent hover:bg-purple-800">

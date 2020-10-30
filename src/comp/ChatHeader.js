@@ -8,8 +8,8 @@ function ChatHeader() {
     appDispatch({ type: "openMenu" })
   }
   return (
-    <nav className="sticky top-0 flex items-center justify-between flex-wrap p-3 md:p-6">
-      <div className="flex text-white">
+    <nav className="sticky top-0 flex items-center justify-between flex-wrap px-2 py-4 md:py-6">
+      <div className="flex text-white py-2">
         <h1 className="font-bold text-2xl lg:text-4xl tracking-tight">SpeakGIPHY</h1>
       </div>
       <div className="flex justify-end lg:w-2/4 ">
