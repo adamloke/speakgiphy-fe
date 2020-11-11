@@ -36,14 +36,23 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 The front-end of the application is built with React using Immer, Context, and Reducer.
 
 ```
-function ChatSearch() {
-  const appDispatch = useContext(DispatchContext)
-  const appState = useContext(StateContext)
-  const [state, setState] = useImmer({
-    searchQuery: "",
-    searchOpen: false,
-    searchResult: [],
-  })
+function App() {
+
+  const initialState = {
+    loggedIn: Boolean(localStorage.getItem("speakgiphyToken")),
+    user: {
+      token: localStorage.getItem("speakgiphyToken"),
+    ...
+
+  function Reducer(draft, action) {
+    switch (action.type) {
+      case "login":
+        draft.loggedIn = true
+        draft.user = action.data
+        break
+    ....
+
+  const [state, dispatch] = useImmerReducer(Reducer, initialState)
 
 ```
 
