@@ -50,7 +50,7 @@ function App() {
         draft.loggedIn = true
         draft.user = action.data
         break
-    ....
+    ...
 
   const [state, dispatch] = useImmerReducer(Reducer, initialState)
 
